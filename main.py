@@ -5,6 +5,25 @@ import asyncio
 import logging
 from dotenv import load_dotenv
 
+# --- Added for Koyeb health check ---
+from threading import Thread
+from flask import Flask
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "OK", 200
+
+def run():
+    port = int(os.getenv("PORT", 8080))  # Koyeb assigns the PORT env variable
+    app.run(host="0.0.0.0", port=port)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+# --- End Koyeb health check code ---
+
 # Load environment variables from .env
 load_dotenv()
 
@@ -20,7 +39,7 @@ DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID'))
 
 # === Streamers to monitor ===
 YOUTUBE_CHANNELS = {
-    'K20Jose': 'UCg2aY6Ah-6i7uZv0HV2U_Kg',
+    'K20Jose': 'UCg2aY6Ah-6i7uZv0HV2_UKg',
     'JJ': 'UCrTzhtBJCeAhUrvt00uu4tA',
     'Cheesehead': 'UCfWdbEQqEjBBuSVXSaidazg',
 }
@@ -99,5 +118,8 @@ async def background_loop():
 async def on_ready():
     logging.info(f'Logged in as {bot.user.name}')
     bot.loop.create_task(background_loop())
+
+# --- Keep-alive server must be started before bot.run() ---
+keep_alive()
 
 bot.run(DISCORD_TOKEN)

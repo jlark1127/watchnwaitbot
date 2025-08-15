@@ -40,8 +40,9 @@ DISCORD_CHANNEL_ID = int(os.getenv('DISCORD_CHANNEL_ID'))
 # === Streamers to monitor ===
 YOUTUBE_CHANNELS = {
     'K20Jose': 'UCg2aY6Ah-6i7uZv0HV2_UKg',
-    'JJ': 'UCrTzhtBJCeAhUrvt00uu4tA',
-    'Cheesehead': 'UCfWdbEQqEjBBuSVXSaidazg',
+    'thebuffalo37': 'UCrTzhtBJCeAhUrvt00uu4tA',
+    'captaincheesehead6789': 'UCfWdbEQqEjBBuSVXSaidazg',
+    'Anthony-mn8tu' : 'UCMdRUDypmuIToIvRlBFVTaw',
 }
 TWITCH_USERS = [
     'Weaksauce85', 'falconman9999', 'coxy810', 'lonewolfgaming4k',

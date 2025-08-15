@@ -29,7 +29,7 @@ TWITCH_USERS = [
     'Weaksauce85', 'falconman9999', 'coxy810', 'lonewolfgaming4k',
     'xuserlurkx', 'willmca32', 'nickisbeast20', 'kingtucker87',
     'coachclark372', 'judahrev55', 'k20jose', 'njcox18', 'Spenc205',
-    'Mrinfinitytte', 'King_uchie23', 'bloodyfreddy66', 'Acreichard9', 'onefvsho'
+    'Mrinfinitytte', 'King_uchie23', 'bloodyfreddy66', 'Acreichard9', 'onefvsho','straightcashnetwork317'
 ]
 
 intents = discord.Intents.default()

@@ -5,25 +5,6 @@ import asyncio
 import logging
 from dotenv import load_dotenv
 
-# --- Added for Koyeb health check ---
-from threading import Thread
-from flask import Flask
-
-app = Flask('')
-
-@app.route('/')
-def home():
-    return "OK", 200
-
-def run():
-    port = int(os.getenv("PORT", 8080))  # Koyeb assigns the PORT env variable
-    app.run(host="0.0.0.0", port=port)
-
-def keep_alive():
-    t = Thread(target=run)
-    t.start()
-# --- End Koyeb health check code ---
-
 # Load environment variables from .env
 load_dotenv()
 
@@ -42,13 +23,13 @@ YOUTUBE_CHANNELS = {
     'K20Jose': 'UCg2aY6Ah-6i7uZv0HV2_UKg',
     'thebuffalo37': 'UCrTzhtBJCeAhUrvt00uu4tA',
     'captaincheesehead6789': 'UCfWdbEQqEjBBuSVXSaidazg',
-    'Anthony-mn8tu' : 'UCMdRUDypmuIToIvRlBFVTaw',
+    'Anthony-mn8tu': 'UCMdRUDypmuIToIvRlBFVTaw',
 }
 TWITCH_USERS = [
     'Weaksauce85', 'falconman9999', 'coxy810', 'lonewolfgaming4k',
     'xuserlurkx', 'willmca32', 'nickisbeast20', 'kingtucker87',
     'coachclark372', 'judahrev55', 'k20jose', 'njcox18', 'Spenc205',
-    'Mrinfinitytte', 'King_uchie23', 'bloodyfreddy66', 'Acreichard9','onefvsho'
+    'Mrinfinitytte', 'King_uchie23', 'bloodyfreddy66', 'Acreichard9', 'onefvsho'
 ]
 
 intents = discord.Intents.default()
@@ -72,7 +53,9 @@ async def check_youtube(session):
                     if name not in live_status['youtube']:
                         live_status['youtube'].add(name)
                         video_id = data['items'][0]['id']['videoId']
-                        await send_discord_message(f"🎥 {name} is now live on YouTube! https://youtube.com/watch?v={video_id}")
+                        await send_discord_message(
+                            f"🎥 {name} is now live on YouTube! https://youtube.com/watch?v={video_id}"
+                        )
                 else:
                     live_status['youtube'].discard(name)
         except Exception as e:
@@ -91,7 +74,9 @@ async def check_twitch(session):
                 if data.get('data'):
                     if username not in live_status['twitch']:
                         live_status['twitch'].add(username)
-                        await send_discord_message(f"🎮 {username} is now live on Twitch! https://twitch.tv/{username}")
+                        await send_discord_message(
+                            f"🎮 {username} is now live on Twitch! https://twitch.tv/{username}"
+                        )
                 else:
                     live_status['twitch'].discard(username)
         except Exception as e:
@@ -119,8 +104,5 @@ async def background_loop():
 async def on_ready():
     logging.info(f'Logged in as {bot.user.name}')
     bot.loop.create_task(background_loop())
-
-# --- Keep-alive server must be started before bot.run() ---
-keep_alive()
 
 bot.run(DISCORD_TOKEN)
